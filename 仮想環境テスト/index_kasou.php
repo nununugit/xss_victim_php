@@ -44,19 +44,18 @@
  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     </body>   
 </html>
-<?php         
-    try {
-        //MySQLのtest2というデータベースに接続。文字エンコーディングの指定。これがないと文字化けする
-        $PDO = new PDO('mysql:host=localhost;dbname=xss_demo;charset=utf8','root','');
-        //PDOのエラーレポートを表示
+<?php       
+
+try {  
+        $PDO = new PDO('mysql:host=192.168.99.101;dbname=xss_demo;charset=utf8','root',',Nm:OCj,-40D');
         $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        //リロード直後の結果5
-        //DBの結果出力
-        $sql = 'select * from lesson1;';         //lesson1というテーブルの中身を確認するという意味
+        $sql = 'select * from lesson1;';
         $result = $PDO->query($sql);
-                               
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {     //forとwhileの違いは、繰り返し回数を優先的に指定したい場合はfor文、条件を優先的に繰り返したい場合はwhile文。今回はDBの中身がすべて書き出されるまでループを行う
+        
+    echo '表示されるか';
+
+        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
             print "<div class='card'><h5 class='card-header'>{$row['name']} </h5> <div class='card-body'> {$row['comment']} </div> <div class='card-footer'> {$row['updated_at']} ";
             print '<form action="index.php" method="post">';
             print '<input type="submit" class="btn btn-primary  type="submit" name="remove" value="Remove"><br>';
@@ -70,9 +69,9 @@
             $name = @$_POST['name'];            //@つきの式で生成されたエラーの場合は返り値が0(NULL,false)になるように制御されます。(＠をつけるとワーニングが出力されません。)nameに関するエラーは無視
             $comment = @$_POST['comment'];      //commentに関するエラーも無視
             if ( $name == NULL ) {
-                print "<script type='text/javascript'>alert('nameが入力されていません。');window.location.href = 'http://localhost/myapp/XSS_demo_mine/';</script>";
+                print "<script type='text/javascript'>alert('nameが入力されていません。');window.location.href = 'http://192.168.99.101/index.php';</script>";
             } elseif ( $comment == NULL ) {
-                print "<script type='text/javascript'>alert('commentが入力されていません。');window.location.href = 'http://localhost/myapp/XSS_demo_mine/';</script>";
+                print "<script type='text/javascript'>alert('commentが入力されていません。');window.location.href = 'http://192.168.99.101/index.php';</script>";
             } else {
                 
             date_default_timezone_set('Asia/Tokyo');
@@ -80,7 +79,7 @@
             $now= date( "Y/m/d H:i:s", $timestamp );
             $sql = "INSERT INTO lesson1 (name,comment,updated_at) VALUES ('$name','$comment','$now');";   //DBにデータを書き込むという意味
             $result = $PDO->query($sql);    //queryに$sqlを渡す。sqlを変数に入れるだけではデーターベースからデータを取得することはできない。
-            $site = "http://localhost/myapp/XSS_demo_mine/";
+            $site = "http://192.168.99.101/index.php";
             header("Location: $site");
             }
             
@@ -90,11 +89,11 @@
             $id = @$_POST['id'];
             $commentedit = @$_POST['commentedit'];
             if ( $commentedit == NULL ) {
-                print "<script type='text/javascript'>alert('comment-editが入力されていません。');window.location.href = 'http://localhost/myapp/XSS_demo_mine/';</script>";
+                print "<script type='text/javascript'>alert('comment-editが入力されていません。');window.location.href = 'http://192.168.99.101/index.php';</script>";
             } else {
             $sql = "UPDATE lesson1 set comment = '$commentedit' where id = $id;";
             $result = $PDO->query($sql);
-            $site = "http://localhost/myapp/XSS_demo_mine/";
+            $site = "http://192.168.99.101/index.php";
             header("Location: $site");
             }
         }
@@ -103,7 +102,7 @@
             $id = @$_POST['id'];
             $sql = "DELETE from lesson1 where id = $id;";
             $result = $PDO->query($sql);
-            $site = "http://localhost/myapp/XSS_demo_mine/";
+            $site = "http://192.168.99.101/index.php";
             header("Location: $site");
         }
     
@@ -111,11 +110,13 @@
         if (isset($_POST['delete'])) {
             $sql = "DELETE FROM lesson1;";
             $result = $PDO->query($sql);
-            $site = "http://localhost/myapp/XSS_demo_mine/";
+            $site = "http://192.168.99.101/index.php";
             header("Location: $site");
         }
 
+        
     } catch (PDOException $e) {
-            exit('データベースに接続できませんでした。' . $e->getMessage());
-    }
+        exit('データベースに接続できませんでした。' . $e->getMessage());
+}
+
 ?>
