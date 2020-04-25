@@ -2,7 +2,9 @@
 session_start();
 $session_user = $_SESSION['profile']['user_name'];
 $session_uid = $_SESSION['profile']['user_id'];
+if($session_uid){
 echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
+
         //MySQLサーバへの接続とデータベースの選択
         $dsn='mysql:dbname=kadai;host=localhost;charset=utf8';
         $user='root';
@@ -21,6 +23,9 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
             print ($e->getMessage());
             die();
         }
+    }else{
+        header('Location: ./bbs_login.php');
+    }
         ?>
 
         <html>
@@ -31,17 +36,15 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
     </head>
             <body>                
     <div>
-            <table>
-        <thead>
-        <tr><th>タイトル</th><th>コメント</th><th>投稿者</th></tr>
         <?php foreach($data as $row){ ?>
-            <tr>
-            <td><?php echo htmlentities( $row['todo_title'], ENT_QUOTES, 'UTF-8');?></td>
-            <td><?php echo htmlentities( $row['todo_value'], ENT_QUOTES, 'UTF-8');;?></td>
-            <td><?php echo $row['user_name'];?></td>
-        </tr>
+        <?php //echo htmlentities( $row['todo_title'], ENT_QUOTES, 'UTF-8'); エスケープよう?>
+            
+        <div class='card'>
+        <h5 class='card-header'><?php echo $row['todo_title'];?> </h5> 
+        <div class='card-body'> <?php echo $row['todo_value'] ;?></div>
+        <div class='card-footer'> <?php echo $row['user_name'];?></div>
+        </div>
         <?php }?>        
-            </table>
         </div>
         
  <!-- Bootstrap Javascript(jQuery含む) -->
