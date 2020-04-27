@@ -35,7 +35,7 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
             $timestamp = time() ;
             $now= date( "Y/m/d H:i:s", $timestamp );
             $result = $dbh ->query($sql);
-            $stmt = $dbh->prepare("INSERT INTO todolist VALUES( '', :title, :comment,'$session_uid',0,'$now',0 );");
+            $stmt = $dbh->prepare("INSERT INTO todolist VALUES( '0', :title, :comment,'$session_uid',0,'$now',0 );");
             $stmt->execute([':title' => $title,':comment' => $comment]);
             if(!$result){
                 die($dbh ->error);

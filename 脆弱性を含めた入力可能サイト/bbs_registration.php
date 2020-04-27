@@ -36,7 +36,7 @@
                 if($row){
                     echo "ユーザは既に存在します。";
                 }else{
-                    $sql = "INSERT INTO users_datas VALUES('', '$name', '$pass1');";
+                    $sql = "INSERT INTO users_datas VALUES('0', '$name', '$pass1');";
                     $result = $dbh ->query($sql);
                     echo $userid;
                     date_default_timezone_set('Asia/Tokyo');
@@ -46,7 +46,7 @@
                     $row = $stmt->fetch();
                     $userid = $row['uid'];
                     $now= date( "Y/m/d H:i:s", $timestamp );
-                    $sql = "INSERT INTO todolist VALUES('', 'firstcomment','Hello World!!' ,'$userid',0,'$now' ,0);";
+                    $sql = "INSERT INTO todolist VALUES('0', 'firstcomment','Hello World!!' ,'$userid',0,'$now' ,0);";
                     $result = $dbh ->query($sql);
                     header('Location: ./bbs_login.php');
                 }
