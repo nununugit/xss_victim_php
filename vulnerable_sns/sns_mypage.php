@@ -40,7 +40,7 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
             if(!$result){
                 die($dbh ->error);
             }
-            header('Location: ./bbs_index.php');
+            header('Location: ./sns_mypage.php');
         }
             
             //個別削除
@@ -51,7 +51,7 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
                     if(!$result){
                         die($dbh ->error);
                     }
-                    header('Location: ./bbs_index.php');
+                    header('Location: ./sns_mypage.php');
 
             //全削除
         }if(isset($_POST['delete_all'])){
@@ -65,20 +65,20 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
                     if(!$result){
                         die($dbh ->error);
                     }
-                    header('Location: ./bbs_index.php');
+                    header('Location: ./sns_mypage.php');
         }if(isset($_POST['logout'])){
             session_destroy();
-            header('Location: ./bbs_login.php');
+            header('Location: ./sns_login.php');
         }
     }else{
-        header('Location: ./bbs_login.php');
+        header('Location: ./sns_login.php');
     }
         ?>
 
 <div class='container'>
 <div class="jumbotron mt-4">
 
-<form action="bbs_index.php" method="post">
+<form action="sns_mypage.php" method="post">
 
   <div class="form-group">
     <label for="exampleInputName">投稿者</label>
@@ -96,11 +96,11 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
         <input type="reset" value="リセット" class="btn btn-primary">        
 </form>
         
-        <form action="bbs_index.php" method="post">
+        <form action="sns_mypage.php" method="post">
         <input type="submit" value="全削除" name="delete_all" class="btn btn-primary">
         </form>
         
-        <form action="bbs_index.php" method="post">
+        <form action="sns_mypage.php" method="post">
         <input type="submit" value="ログアウト" name="logout" class="btn btn-primary">
         </form>
         </div>
@@ -111,7 +111,7 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
         <h5 class='card-header'><?php echo $row['todo_title'];?> </h5> 
         <div class='card-body'> <?php echo $row['todo_value'] ;?></div>
         <div class='card-footer'> <?php echo $row['post_date'];?>
-        <form action="bbs_index.php" method="get">
+        <form action="sns_mypage.php" method="get">
             <input  value="削除する"  type="submit"  class="btn btn-primary">
             <input type="hidden"  name="todo_id1" value="<?=$row['todo_id']?>">
             </form>
@@ -119,7 +119,7 @@ echo "<h1>ようこそ".$_SESSION['profile']['user_name']."さん</h1>";
         </div>
         <?php }?>   
         </div>
-        <a href="./bbs_alltodo.php">みんなの投稿はこちら</a>
+        <a href="./sns_timeline.php">みんなの投稿はこちら</a>
         
  <!-- Bootstrap Javascript(jQuery含む) -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">

@@ -48,7 +48,7 @@
                     $now= date( "Y/m/d H:i:s", $timestamp );
                     $sql = "INSERT INTO todolist VALUES('0', 'firstcomment','Hello World!!' ,'$userid',0,'$now' ,0);";
                     $result = $dbh ->query($sql);
-                    header('Location: ./bbs_login.php');
+                    header('Location: ./sns_login.php');
                 }
             }
         }?>
@@ -64,7 +64,7 @@
         <div class="jumbotron mt-4">
             <h2><b>ログイン</b></h2>
           <br>
-          <form action="bbs_registration.php" method="post">
+          <form action="sns_user_registration.php" method="post">
             <div class="form-group">
               <label for="exampleInputName"><b>ユーザ名</b></label>
               <input type="text" name="regist_name" class="form-control" id="exampleInputEmail1">

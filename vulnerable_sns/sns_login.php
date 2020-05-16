@@ -33,7 +33,7 @@
                 $token_uid = sha1($row['uid']);
                 $token_username = sha1($row['user_name']);
                 $_SESSION['profile']=array('user_id'=>$row['uid'],'user_name'=>$row['user_name']);
-                header('Location: ./bbs_index.php');
+                header('Location: ./sns_timeline.php');
             }else{
                 echo "ログイン失敗";
             }
@@ -53,7 +53,7 @@
         <div class="jumbotron mt-4">
             <h2><b>ログイン</b></h2>
           <br>
-          <form action="bbs_login.php" method="post">
+          <form action="sns_login.php" method="post">
             <div class="form-group">
               <label for="exampleInputName"><b>ユーザ名</b></label>
               <input type="text" name="user_name" class="form-control" id="exampleInputEmail1">

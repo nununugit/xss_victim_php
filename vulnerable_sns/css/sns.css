@@ -1,0 +1,27 @@
+.fixed_btn
+{
+  position: fixed;
+  bottom: 100px; 
+  right: 500px;
+}
+.posiCenter {
+  position:relative;
+  width:100%;
+  height:auto;
+  margin:0 auto;
+  background:rgba(235,235,235,1.00);
+  overflow:hidden;
+}
+.posiCenterIn {
+  position:absolute;
+  left:50%;
+  top:0;
+  width:700px;
+  height:auto;
+  margin-left:-350px;/*widthの半分を-で*/
+  background:rgba(229,214,78,1.00);
+  text-align:left;
+}
+.white{
+  color : white;
+}
