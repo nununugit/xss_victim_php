@@ -50,7 +50,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>ひとこと掲示板login</title>
     </head>
-        <div class="jumbotron mt-4">
+        <body>
+            <div class = "container">
+            <div class="jumbotron mt-4">
             <h2><b>ログイン</b></h2>
           <br>
           <form action="sns_login.php" method="post">
@@ -65,13 +67,11 @@
             </div>
 
             <div class="form-group form-check"></div>
-            <input type="submit" name='send' value="ログイン" class="btn btn-outline-dark bg-warning btn-block">
-            <small class="text-muted">
-            続行することで、当社の利用規約および<span class='bluetext'>プライバシー</span>規約に同意するものとみなされます。
-            </small>
+            <input type="submit" name='send' value="ログイン" class="btn btn-outline-dark btn-primary btn-block">
+    <a href="./sns_user_registration.php">登録はこちら</a>
           </form>
           </div>
-    <a href="./bbs_registration.php">登録はこちら</a>
+            </div>
 
  <!-- Bootstrap Javascript(jQuery含む) -->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">

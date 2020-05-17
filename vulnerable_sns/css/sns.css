@@ -1,15 +1,14 @@
-.fixed_btn
-{
+.buttoniti{
   position: fixed;
-  bottom: 100px; 
-  right: 500px;
+  bottom: 500px; 
+  right: 100px;
+  z-index: 10;
 }
 .posiCenter {
   position:relative;
   width:100%;
   height:auto;
   margin:0 auto;
-  background:rgba(235,235,235,1.00);
   overflow:hidden;
 }
 .posiCenterIn {
@@ -19,9 +18,23 @@
   width:700px;
   height:auto;
   margin-left:-350px;/*widthの半分を-で*/
-  background:rgba(229,214,78,1.00);
   text-align:left;
 }
-.white{
-  color : white;
-}
+/*
+.png1 {
+
+  display: inline-block;
+  background: url(../pngs/home_hoso.png) no-repeat;
+}.png2 {
+
+  display: inline-block;
+  padding-left: 30px;
+  line-height: 30px;
+  background: url(../pngs/user_hoso.png) no-repeat;
+}.png3 {
+
+  display: inline-block;
+  padding-left: 30px;
+  line-height: 30px;
+  background: url(../pngs/search_hoso.png) no-repeat;
+}*/

@@ -46,9 +46,17 @@
                     $row = $stmt->fetch();
                     $userid = $row['uid'];
                     $now= date( "Y/m/d H:i:s", $timestamp );
-                    $sql = "INSERT INTO todolist VALUES('0', 'firstcomment','Hello World!!' ,'$userid',0,'$now' ,0);";
+                    $sql = "INSERT INTO todolist VALUES('0', 'Hello World!!' ,'$userid',0,'$now' ,0);";
                     $result = $dbh ->query($sql);
-                    header('Location: ./sns_login.php');
+                                        
+                    $stmt = $dbh->prepare("SELECT * FROM users_datas WHERE user_name = :name AND user_pass=:pass;");
+                    $stmt->execute([':name' => $name,':pass'=> $pass1]);
+                    $row = $stmt->fetch();
+                    session_start();
+                    $token_uid = sha1($row['uid']);
+                    $token_username = sha1($row['user_name']);
+                    $_SESSION['profile']=array('user_id'=>$row['uid'],'user_name'=>$row['user_name']);
+                    header('Location: ./sns_timeline.php');
                 }
             }
         }?>
@@ -61,8 +69,9 @@
         <title>ひとこと掲示板login</title>
     </head>
         <body>
+            <div class = "container">
         <div class="jumbotron mt-4">
-            <h2><b>ログイン</b></h2>
+            <h2><b>ユーザ登録</b></h2>
           <br>
           <form action="sns_user_registration.php" method="post">
             <div class="form-group">
@@ -81,13 +90,12 @@
             </div>
 
             <div class="form-group form-check"></div>
-            <input type="submit" value="登録" class="btn btn-outline-dark bg-warning btn-block">
-            <small class="text-muted">
-            続行することで、当社の利用規約および<span class='bluetext'>プライバシー</span>規約に同意するものとみなされます。
-            </small>
+            <input type="submit" value="登録" class="btn btn-outline-dark btn-block">
+            <a href="./sns_login.php">ログインはこちら</a>
+            
           </form>
           </div>
-    <a href="./bbs_login.php">ログインはこちら</a>    
+            </div>    
  <!-- Bootstrap Javascript(jQuery含む) -->
  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
