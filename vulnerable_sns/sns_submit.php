@@ -3,8 +3,9 @@
 session_start();
 $session_user = $_SESSION['profile']['user_name'];
 $session_uid = $_SESSION['profile']['user_id'];
+$csrf_token = $session_uid;
+$_SESSION['csrf_token'] = $csrf_token;
 if($session_uid){
-
         //MySQLサーバへの接続とデータベースの選択
         $dsn='mysql:dbname=kadai;host=localhost;charset=utf8';
         $user='root';
@@ -16,33 +17,22 @@ if($session_uid){
         }catch(PDOException $e){
             print ($e->getMessage());
             die();
+        }if(isset($_POST['todo_value'])){
+            if($_POST["csrf_token"] === $_SESSION['csrf_token']){
+                $comment = @$_POST['todo_value'];
+                if (empty($comment)){
+                    echo '<strong>文字を入力してください</strong>';
+                }else{
+                date_default_timezone_set('Asia/Tokyo');
+                $timestamp = time() ;
+                $now= date( "Y/m/d H:i:s", $timestamp );
+                $stmt = $dbh->prepare("INSERT INTO todolist VALUES( '0', :comment,'$session_uid',0,'$now',0 );");
+                $stmt->execute([':comment' => $comment]);
+                header('Location: ./sns_timeline.php');
+            }
+        }else{
+            echo '不正なリクエストです';
         }
-            //テーブルへの登録
-        if(isset($_POST['todo_value'])){
-            $comment = @$_POST['todo_value'];
-            if (empty($comment)){
-                echo '<strong>文字を入力してください</strong>';
-            }else{
-            date_default_timezone_set('Asia/Tokyo');
-            $timestamp = time() ;
-            $now= date( "Y/m/d H:i:s", $timestamp );
-            $stmt = $dbh->prepare("INSERT INTO todolist VALUES( '0', :comment,'$session_uid',0,'$now',0 );");
-            $stmt->execute([':comment' => $comment]);
-            header('Location: ./sns_timeline.php');
-        }
-            
-            //個別削除
-        }if(isset($_POST['delete_all'])){
-            date_default_timezone_set('Asia/Tokyo');
-            $timestamp = time() ;
-            $now= date( "Y/m/d H:i:s", $timestamp ) ;
-            $sql="UPDATE todolist SET delete_flag = 1 WHERE delete_flag = 0 AND uid ='$session_uid';
-            INSERT INTO todolist VALUES( '','test', 'test','$session_uid', 0 ,'$now',0 );";
-                    $result = $dbh ->query($sql);
-                    if(!$result){
-                        die($dbh ->error);
-                    }
-                    header('Location: ./sns_timeline.php');
         }if(isset($_POST['logout'])){
             session_destroy();
             header('Location: ./sns_login.php');
@@ -63,6 +53,7 @@ if($session_uid){
         <small class="text-muted">コメントを入れてください</small>
   </div>
 
+  <input type="hidden" name="csrf_token" value="<?php echo $csrf_token;?>">
         <input type="submit" value="投稿"  class="btn btn-primary">
         <input type="reset" value="リセット" class="btn btn-primary">        
 </form>
