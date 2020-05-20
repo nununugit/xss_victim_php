@@ -38,7 +38,6 @@
                 }else{
                     $sql = "INSERT INTO users_datas VALUES('0', '$name', '$pass1');";
                     $result = $dbh ->query($sql);
-                    echo $userid;
                     date_default_timezone_set('Asia/Tokyo');
                     $timestamp = time() ;
                     $stmt = $dbh->prepare("SELECT * FROM users_datas WHERE user_name =:name;");

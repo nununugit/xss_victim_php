@@ -38,11 +38,15 @@ if($session_uid){
           if(!$result){
               die($dbh ->error);
           }
-          header('Location: ./sns_timeline.php');}
+          header('Location: ./sns_timeline.php');
+        }if(isset($_POST['logout'])){
+          session_destroy();
+          header('Location: ./sns_login.php');
+      }
     }else{
         header('Location: ./sns_login.php');
     }
-        ?>
+  ?>
 
         <html>
     <head>
@@ -53,6 +57,10 @@ if($session_uid){
     </head>
 <body>
 <div class="container responsive">
+  
+<form action="sns_submit.php" method="post">
+        <input type="submit" value="ログアウト" name="logout" style="position: fixed;top: 20px; right: 40px;" class="btn btn-primary">
+        </form>
                  
 <nav>
   <div class="nav navbar navbar-light bg-light fixed-bottom bg-white" id="nav-tab" role="tablist" >
